@@ -5,12 +5,14 @@ import CloseIcon from "./SVG/CloseIcon";
 import type { RootState } from "../apps/Store";
 import { setClickedfile, setopenedFiles } from "../apps/features/filetreeslice";
 
+
 interface IProps{
 file:IFile;
 }
 
 const OpenedFileBarTab= ({file}:IProps) => {
-  const dispatch=useDispatch()
+  const dispatch=useDispatch();
+
   const {openfile, clickedfile:{activetabid } }= useSelector((state: RootState) => state.tree); 
   //Handlers
   const onclick=()=>{
@@ -36,21 +38,25 @@ const OpenedFileBarTab= ({file}:IProps) => {
       onClick={onclick}
       style={{
         borderTop:
-          file.id === activetabid ? "2px soild #cf6ccf" : "2px soild transparent",
+          file.id === activetabid
+            ? "2px soild #cf6ccf"
+            : "2px soild transparent",
       }}
     >
       <Renderfileicon filename={file.name} />
       <span className="cursor-pointer flex justify-center items-center w-fit mx-2 p-1 rounded-md duration-300 ">
         {file.name}
       </span>
-      <span className="cursor-pointer flex justify-center items-center w-fit mr-2 p-1 rounded-md duration-300 "
-      onClick={e=>{
-        e.stopPropagation();
-        onRemove(file.id)
-      }}
+      <span
+        className="cursor-pointer flex justify-center items-center w-fit mr-2 p-1 rounded-md duration-300 "
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove(file.id);
+        }}
       >
         <CloseIcon />
       </span>
+
     </div>
   );
     
