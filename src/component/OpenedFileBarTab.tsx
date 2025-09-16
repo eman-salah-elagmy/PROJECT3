@@ -3,7 +3,7 @@ import type { IFile } from "../interfces";
 import Renderfileicon from "./Renderfileicon";
 import CloseIcon from "./SVG/CloseIcon";
 import type { RootState } from "../apps/Store";
-import { setClickedfile, setopenedFiles } from "../apps/features/filetreeslice";
+import { setClickedfile, setopenedFiles, settabIdToRemove } from "../apps/features/filetreeslice";
 
 
 interface IProps{
@@ -36,6 +36,10 @@ const OpenedFileBarTab= ({file}:IProps) => {
     <div
       className="flex items-center p-2"
       onClick={onclick}
+      onContextMenu={e=>{
+        e.preventDefault();
+        dispatch(settabIdToRemove(file.id))
+      }}
       style={{
         borderTop:
           file.id === activetabid
