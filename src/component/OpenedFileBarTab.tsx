@@ -3,7 +3,7 @@ import type { IFile } from "../interfces";
 import Renderfileicon from "./Renderfileicon";
 import CloseIcon from "./SVG/CloseIcon";
 import type { RootState } from "../apps/Store";
-import { setClickedfile } from "../apps/features/filetreeslice";
+import { setClickedfile, setopenedFiles } from "../apps/features/filetreeslice";
 
 interface IProps{
 file:IFile;
@@ -11,11 +11,24 @@ file:IFile;
 
 const OpenedFileBarTab= ({file}:IProps) => {
   const dispatch=useDispatch()
-  const { clickedfile:{activetabid } }= useSelector((state: RootState) => state.tree); 
+  const {openfile, clickedfile:{activetabid } }= useSelector((state: RootState) => state.tree); 
   //Handlers
   const onclick=()=>{
     const {id,name,content}=file;
     dispatch(setClickedfile({ filename: name, filecontent: content ,activetabid:id}));
+  }
+
+  const onRemove=(selectedId:string)=>{
+    const filtered=openfile.filter(file=>file.id!==selectedId)
+    const lastTab = filtered[filtered.length - 1];
+    if(!lastTab){
+      dispatch(setopenedFiles([]));
+      dispatch(setClickedfile({activetabid:null,filecontent:"",filename:""}))
+      return
+    }
+    const {id,name,content}=lastTab
+    dispatch(setopenedFiles(filtered))
+    dispatch(setClickedfile({activetabid:id,filecontent:content,filename:name}))
   }
   return (
     <div
@@ -30,7 +43,12 @@ const OpenedFileBarTab= ({file}:IProps) => {
       <span className="cursor-pointer flex justify-center items-center w-fit mx-2 p-1 rounded-md duration-300 ">
         {file.name}
       </span>
-      <span className="cursor-pointer flex justify-center items-center w-fit mr-2 p-1 rounded-md duration-300 ">
+      <span className="cursor-pointer flex justify-center items-center w-fit mr-2 p-1 rounded-md duration-300 "
+      onClick={e=>{
+        e.stopPropagation();
+        onRemove(file.id)
+      }}
+      >
         <CloseIcon />
       </span>
     </div>
