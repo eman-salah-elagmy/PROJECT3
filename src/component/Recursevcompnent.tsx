@@ -32,7 +32,7 @@ const Recursevcompnent= ({filetree }:IProps) => {
   };
   return (
     <div className="mb-2 ml-2 cursor-pointer">
-      <div className="flex items-center mb-1">
+      <div className="flex items-center mb-1.5">
         {isFolder ? (
           <div onClick={toggle} className="flex items-center">
             {isopen ? <BottomArrowIcon /> : <RightArrowIcon />}
@@ -41,13 +41,10 @@ const Recursevcompnent= ({filetree }:IProps) => {
               isfolder={isFolder}
               isopen={isopen}
             />
-            <span>{name}</span>
+            <span className="ml-2">{name}</span>
           </div>
         ) : (
-          <div
-            className="mr-2 flex items-center"
-            onClick={onFileclicked}
-          >
+          <div className="mr-2 flex items-center" onClick={onFileclicked}>
             <Renderfileicon filename={name} />
             <span className="ml-2">{name}</span>
           </div>
