@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 import "./App.css";
 import type { RootState } from "./apps/Store";
-import OpenedFiledBar from "./component/OpenedFiledBar";
 import Preview from "./component/Preview";
 import Recursevcompnent from "./component/Recursevcompnent";
 import ResizablePanel from "./component/ResizablePanel";
 import { filetree } from "./data/Filetree";
 import WelcomeTab from "./component/WelcomeTab";
-import DropMenue from "./component/UI/ContextMenue";
+
 
 function App() {
   const { openfile } = useSelector(({ tree }: RootState) => tree);
